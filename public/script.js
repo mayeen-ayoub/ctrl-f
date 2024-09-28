@@ -1,5 +1,27 @@
-// Open the document preview popup
-function openPopup() {
+// Open the document preview popup and show the actual document
+function openPopup(file) {
+    const previewContainer = document.getElementById('document-preview');
+    previewContainer.innerHTML = '';
+
+    if (file.type.startsWith('image/')) {
+    
+        const image = document.createElement('iframe');
+        image.src = URL.createObjectURL(file);
+        image.style.width = '100%';
+        previewContainer.appendChild(image);
+    } else if (file.type === 'application/pdf') {
+        const pdfViewer = document.createElement('embed');
+        pdfViewer.src = URL.createObjectURL(file);
+        pdfViewer.type = 'application/pdf';
+        pdfViewer.style.width = '100%';
+        pdfViewer.style.height = '500px';
+        previewContainer.appendChild(pdfViewer);
+    } else {
+        const unsupportedMessage = document.createElement('p');
+        unsupportedMessage.textContent = "Cannot preview this file type.";
+        previewContainer.appendChild(unsupportedMessage);
+    }
+
     document.getElementById('popup').style.display = 'flex';
     document.querySelector('.container').classList.add('blur');
 }
@@ -10,20 +32,6 @@ function closePopup() {
     document.querySelector('.container').classList.remove('blur');
 }
 
-// Open user information popup
-function openUserPopup() {
-    document.getElementById('userPopup').style.display = 'flex';
-    document.querySelector('.container').classList.add('blur');
-}
-
-// Close the user popup
-function closeUserPopup() {
-    document.getElementById('userPopup').style.display = 'none';
-    document.querySelector('.container').classList.remove('blur');
-}
-
-
-// Trigger file upload dialog
 function triggerUpload() {
     document.getElementById('fileInput').click();
 }
@@ -39,70 +47,56 @@ function handleFileUpload() {
         listItem.classList.add('doc-item');
 
         if (file.type.startsWith('image/')) {
-            // If the file is an image, show a preview
             const imagePreview = document.createElement('img');
             imagePreview.src = URL.createObjectURL(file);
             imagePreview.alt = file.name;
-            imagePreview.style.maxWidth = '100px'; // Set preview image size
+            imagePreview.style.maxWidth = '100px'; 
             listItem.appendChild(imagePreview);
         } else if (file.type === 'application/pdf') {
-            // If the file is a PDF, use <embed> to show the first page
             const pdfPreview = document.createElement('embed');
             pdfPreview.src = URL.createObjectURL(file);
             pdfPreview.type = 'application/pdf';
             pdfPreview.width = '100%';
-            pdfPreview.height = '200px'; // Adjust height as needed
+            pdfPreview.height = '200px'; 
             listItem.appendChild(pdfPreview);
         } else {
-            // For other file types, display a message (or handle accordingly)
             listItem.textContent = "Preview not available for this file type.";
         }
 
-        // Add the file to the document list
         docList.appendChild(listItem);
+        listItem.addEventListener('click', function() {
+            openPopup(file);
+        });
     }
 }
 
-
-// Simulate opening popup when clicking a document item
-document.querySelectorAll('.doc-item').forEach(item => {
-    item.addEventListener('click', openPopup);
-});
-
 // Function to handle sending the message
 function sendMessage(event) {
-    event.preventDefault(); // Prevent the form from reloading the page
+    event.preventDefault();
 
-    // Get the message text from the input field
     const input = document.getElementById('chat-input');
-    const messageText = input.value.trim(); // Trim spaces
+    const messageText = input.value.trim();
 
-    if (messageText === '') return; // Prevent empty messages
+    if (messageText === '') return;
 
-    // Display user's message
     const messageContainer = document.getElementById('messages');
     const userMessage = document.createElement('div');
     userMessage.classList.add('message', 'user');
     userMessage.innerText = messageText;
     messageContainer.appendChild(userMessage);
 
-    // Clear the input field
     input.value = '';
 
-    // Scroll to the latest message
     messageContainer.scrollTop = messageContainer.scrollHeight;
 
-    // Prevent multiple bot replies by using setTimeout only once
     setTimeout(() => {
         const botMessage = document.createElement('div');
         botMessage.classList.add('message', 'bot');
-        botMessage.innerText = "This is a bot reply."; // Replace with actual bot logic
+        botMessage.innerText = "This is a bot reply.";
         messageContainer.appendChild(botMessage);
 
-        // Scroll to the latest message
         messageContainer.scrollTop = messageContainer.scrollHeight;
-    }, 1000); // Simulate delay for bot response
+    }, 1000);
 }
 
-// Attach the chat functionality to the form
 document.getElementById('chat-form').addEventListener('submit', sendMessage);

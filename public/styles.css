@@ -1,18 +1,17 @@
-/* Reset some styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif; /* Apply Roboto font globally */
+    font-family: 'Roboto', sans-serif;
 }
 
-/* Blue theme colors */
 :root {
     --primary-blue: #55679C;
     --secondary-blue: #7C93C3;
     --dark-blue: #1E2A5E;
     --light-color: #F5EDED;
 }
+
 .page-header {
     display: flex;
     justify-content: space-between;
@@ -28,35 +27,32 @@
     border-bottom: 2px solid var(--light-color);
 }
 
-/* Container for the whole layout */
+.ctrl-f-heading {
+    font-family: 'Source Code Pro', monospace;
+    font-weight: 700;
+    text-align: center;
+}
+
+
 .container {
     display: flex;
     height: 100vh;
 }
 
-/* Sidebar styling */
 .sidebar {
     width: 20%;
     background-color: var(--primary-blue);
-    color: #1E2A5E;
+    color: var(--dark-blue);
     padding: 20px;
-    border-right: 1px solid #F5EDED;
+    border-right: 1px solid var(--light-color);
+    position: relative;
 }
 
-/* Sidebar heading */
-.sidebar h2 {
-    margin-bottom: 20px;
-    font-size: 1.5em;
-    font-weight: 700; /* Use bold for headings */
-}
-
-/* Document list */
 .doc-list {
     list-style-type: none;
-    margin-top: 60px; 
+    margin-top: 60px;
 }
 
-/* Document item styling */
 .doc-item {
     padding: 10px;
     margin-bottom: 10px;
@@ -64,48 +60,71 @@
     cursor: pointer;
     border-radius: 25px;
     text-align: center;
-    width: 80%; 
-    margin-left: auto;
-    margin-right: auto;
-    font-weight: 400; /* Regular weight for document items */
+    width: 80%;
+    margin: auto;
+    font-weight: 400;
 }
 
 .doc-item img, .doc-item embed {
     max-width: 100%;
-    max-height: 150px; /* Set the maximum height for image and PDF previews */
+    max-height: 150px;
     margin: 5px;
 }
 
 .doc-item:hover {
-    background-color: white;
+    background-color: #f2dcdc;
+    color: white;
 }
 
-/* Main content area styling */
+
+.upload-container {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.plus-sign {
+    background-color: var(--light-color);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    color: var(--primary-blue);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+
+.plus-sign:hover {
+    background-color: #f2dcdc;
+    color: white;
+}
+
+
 .main-content {
     width: 80%;
-    padding: 20px;
-}
-
-.main-content header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.main-content h1 {
-    color: var(--dark-blue);
-    margin-bottom: 20px;
-    font-weight: 700; /* Use bold for main headings */
-}
-.chat-box {
-    background-color: var(--light-color);
-    border: 1px solid var(--light-color);
-    padding: 20px;
-    height: 400px; /* Adjust as needed */
+    padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    height: 100vh;
 }
+
+.chat-box {
+    background-color: var(--light-color);
+    border: 1px solid var(--light-color);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 300px;
+}
+
 
 .messages {
     flex-grow: 1;
@@ -114,8 +133,15 @@
     padding: 10px;
     background-color: #fff;
     border: 1px solid var(--light-color);
-    height: 300px; /* Adjust as needed */
 }
+
+
+.main-content h1 {
+    color: var(--dark-blue);
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
 
 .chat-form {
     display: flex;
@@ -144,82 +170,30 @@
     background-color: var(--secondary-blue);
 }
 
-/* Styling for individual messages */
+/* Chat Message Styling */
 .message {
     padding: 8px 15px;
     margin-bottom: 5px;
     border-radius: 15px;
-    display: inline-block; /* Keep messages inline */
-    max-width: 60%; /* Ensure messages don't take up too much space */
-    word-wrap: break-word; /* Ensure long words break properly */
-    clear: both; /* Ensure each message is on a new line */
+    max-width: 60%;
+    word-wrap: break-word;
+    clear: both;
 }
 
-/* User message styling */
 .message.user {
     background-color: var(--secondary-blue);
     color: white;
     text-align: right;
-    float: right; /* Align user messages to the right */
+    float: right;
 }
 
-/* Bot message styling */
 .message.bot {
     background-color: var(--light-color);
     color: var(--dark-blue);
     text-align: left;
-    float: left; /* Align bot messages to the left */
+    float: left;
 }
 
-
-
-/* Sidebar styling */
-.sidebar {
-    width: 20%;
-    background-color: var(--primary-blue);
-    color: var(--dark-blue);
-    padding: 20px;
-    border-right: 1px solid #ddd;
-    position: relative; /* Keep elements relative to the sidebar */
-}
-
-/* Position the upload container in the top-right corner */
-.upload-container {
-    position: absolute;
-    top: 10px;
-    right: 20px; /* Adjust this value to ensure it's aligned within the sidebar */
-}
-
-/* Styling for the Plus Sign Button */
-.plus-sign {
-    background-color: var(--primary-blue);
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 24px;
-    color: var(--dark-blue);
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 500; /* Medium weight for the plus sign */
-}
-
-.plus-sign:hover {
-    background-color: var(--light-color);
-}
-
-/* Chat box styling */
-.chat-box {
-    background-color: var(--light-color);
-    border: 1px solid var(--light-color);
-    padding: 20px;
-    height: 300px; /* Adjust as needed */
-    font-weight: 400; /* Regular weight for chat content */
-}
-
-/* Popup modal styling */
 .popup {
     position: fixed;
     top: 0;
@@ -237,20 +211,33 @@
     padding: 20px;
     border-radius: 10px;
     width: 50%;
+    max-height: 80%;
     text-align: center;
-    font-weight: 400; /* Regular weight for popups */
+    font-weight: 400;
+    overflow-y: auto;
 }
 
-.popup-content h2 {
-    color: var(--primary-blue);
-    font-weight: 700; /* Bold for popup headings */
+.popup-content img, .popup-content embed {
+    width: 100%;
+    height: 500px;
+    margin-bottom: 20px;
+}
+
+.close-button {
+    background-color: var(--primary-blue);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.close-button:hover {
+    background-color: var(--secondary-blue);
 }
 
 .blur {
     filter: blur(5px);
-}
-
-/* Popup for User Info */
-#userPopup .popup-content {
-    width: 40%;
 }

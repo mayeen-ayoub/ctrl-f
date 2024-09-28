@@ -8,44 +8,37 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    
 </head>
 <body>
     
     <!-- Sidebar for documents and document upload -->
     <div class="container">
-        <!-- Sidebar for documents -->
         <aside class="sidebar">
-            
+
             <div class="upload-container">
                 <button id="uploadButton" class="plus-sign" onclick="triggerUpload()">+</button>
                 <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload()">
             </div>
         
             <ul class="doc-list">
-                <!-- This is where the documents or previews will be shown -->
             </ul>
         </aside>
 
         <!-- Main content area for chat -->
         <main class="main-content">
             <header>
-                <h1>Ctrl-F</h1>
+                <h1 class="ctrl-f-heading">ctrl-f</h1>
 
-                <!-- User Profile Icon -->
-                <div class="profile-pic-container">
-                    <img src="path-to-your-image.jpg" alt="User Profile" class="profile-pic" onclick="openUserPopup()">
-                    <div class="profile-popup" id="profilePopup">
-                        <h3>User Name</h3>
-                        <p>Email: user@example.com</p>
-                        <p>Settings, Logout, etc.</p>
-                    </div>
-                </div>
+                <hr style="border: 1px solid var(--light-color); width: 100%;">
+
             </header>
             <div class="chat-box">
-                <!-- Chat message display area -->
                 <div id="messages" class="messages"></div>
                 
-                <!-- Chat input form -->
                 <form id="chat-form" class="chat-form" onsubmit="sendMessage(event)">
                     <input type="text" id="chat-input" placeholder="Type a message..." required>
                     <button type="submit">Send</button>
@@ -54,14 +47,14 @@
         </main>
     </div>
 
-    <!-- Popup modal for document preview -->
-    <div class="popup" id="popup">
-        <div class="popup-content">
-            <h2>Document Preview</h2>
-            <p>Here is a preview of the document...</p>
-            <button onclick="closePopup()">Close</button>
-        </div>
+    <!-- Popup for document preview -->
+<div class="popup" id="popup">
+    <div class="popup-content">
+        <div id="document-preview"></div>
+        <button class="close-button" onclick="closePopup()">Close</button>
     </div>
+</div>
+
 
     <script src="script.js"></script>
 </body>
