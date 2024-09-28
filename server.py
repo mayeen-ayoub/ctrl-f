@@ -6,8 +6,6 @@ import os
 from dotenv import load_dotenv
 import faiss
 from langchain_community.docstore.in_memory import InMemoryDocstore
-from langchain_openai import OpenAIEmbeddings
-from langchain_community.vectorstores import FAISS
 from langchain.agents.agent_toolkits import create_retriever_tool
 from langchain.agents import AgentType
 from langchain_core.documents import Document
@@ -95,9 +93,8 @@ def serve_file(filename):
 def get_response():
 	user_message = request.json.get('text')
 	print(user_message)
-
-	return_message = "This is the return message"
-	
+	response = agent.invoke({"input": user_message})
+	return_message = response["output"]
 	return jsonify({"status": "success", "message": return_message})
 	
 
