@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ctrl-F </title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Sidebar for documents and document upload -->
+    <div class="container">
+        <aside class="sidebar">
+            <h2> Documents</h2>
+                <button id="uploadButton" onclick="triggerUpload()">Upload Document</button>
+                <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload()">
+                <div class="popup" id="userPopup">
+                    <div class="popup-content">
+                        <h2>User Information</h2>
+                        <p>User details go here...</p>
+                        <button onclick="closeUserPopup()">Close</button>
+                    </div>
+                </div>
+            </header>
+            <ul class="doc-list">
+                <li class="doc-item">Document 1</li>
+                <li class="doc-item">Document 2</li>
+                <li class="doc-item">Document 3</li>
+            </ul>
+        </aside>
+
+        <!-- Main content area for chat -->
+        <main class="main-content">
+            <header>
+                <h1>Ctrl-F</h1>
+                <div class="popup" id="userPopup">
+                    <div class="popup-content">
+                        <h2>User Information</h2>
+                        <p>User details go here...</p>
+                        <button onclick="closeUserPopup()">Close</button>
+                    </div>
+                </div>
+            </header>
+            <div class="chat-box">
+            </div>
+        </main>
+    </div>
+
+    <!-- Popup modal for document preview -->
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <h2>Document Preview</h2>
+            <p>Here is a preview of the document...</p>
+            <button onclick="closePopup()">Close</button>
+        </div>
+    </div>
+
+    <!-- Popup for User Profile or User Info -->
+    <div class="popup" id="userPopup">
+        <div class="popup-content">
+            <h2>User Information</h2>
+            <p>User details go here...</p>
+            <button onclick="closeUserPopup()">Close</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

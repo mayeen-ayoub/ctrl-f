@@ -1,0 +1,122 @@
+/* Reset some styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Blue theme colors */
+:root {
+    --primary-blue: #55679C;
+    --secondary-blue: #7C93C3;
+    --dark-blue: #1E2A5E;
+    --light-color: #F5EDED;
+}
+
+/* Container for the whole layout */
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar styling */
+.sidebar {
+    width: 20%;
+    background-color: var(--primary-blue);
+    color: #1E2A5E;
+    padding: 20px;
+    border-right: 1px solid #F5EDED;
+}
+
+.sidebar h2 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
+.doc-list {
+    list-style-type: none;
+}
+
+.doc-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: var(--light-color);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+}
+
+.doc-item:hover {
+    background-color: var(--secondary-blue);
+}
+
+/* Main content area styling */
+.main-content {
+    width: 80%;
+    padding: 20px;
+}
+
+.main-content header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-content h1 {
+    color: var(--dark-blue);
+    margin-bottom: 20px;
+}
+
+#uploadButton {
+    padding: 10px 20px;
+    background-color: var(--primary-blue);
+    color: 1E2A5E;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#uploadButton:hover {
+    background-color: var(--secondary-blue);
+}
+
+.chat-box {
+    background-color: var(--light-color);
+    border: 1px solid var(--light-color);
+    padding: 20px;
+    height: 300px; /* Adjust as needed */
+}
+
+/* Popup modal styling */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    background-color: var(--light-color);
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    text-align: center;
+}
+
+.popup-content h2 {
+    color: var(--primary-blue);
+}
+
+.blur {
+    filter: blur(5px);
+}
+
+/* Popup for User Info */
+#userPopup .popup-content {
+    width: 40%;
+}
