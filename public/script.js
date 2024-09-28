@@ -42,30 +42,31 @@ function handleFileUpload() {
     const file = fileInput.files[0];
 
     if (file) {
-        const docList = document.querySelector('.doc-list');
-        const listItem = document.createElement('li');
-        listItem.classList.add('doc-item');
+        const formData = new FormData();
+        formData.append('file', file);
+    
+        fetch("/extract-text", {
+            method: "post",
+            body: formData,
+        }).then(response => {
+            return response.blob();
+        }).then(blob => {
+            const url = URL.createObjectURL(blob);  // Create a URL for the blob
 
-        if (file.type.startsWith('image/')) {
-            const imagePreview = document.createElement('img');
-            imagePreview.src = URL.createObjectURL(file);
+            const docList = document.querySelector('.doc-list');
+            const listItem = document.createElement('li');
+            listItem.classList.add('doc-item');
+
+            const imagePreview = document.createElement('embed');
+            imagePreview.src = url;
             imagePreview.alt = file.name;
             imagePreview.style.maxWidth = '100px'; 
             listItem.appendChild(imagePreview);
-        } else if (file.type === 'application/pdf') {
-            const pdfPreview = document.createElement('embed');
-            pdfPreview.src = URL.createObjectURL(file);
-            pdfPreview.type = 'application/pdf';
-            pdfPreview.width = '100%';
-            pdfPreview.height = '200px'; 
-            listItem.appendChild(pdfPreview);
-        } else {
-            listItem.textContent = "Preview not available for this file type.";
-        }
 
-        docList.appendChild(listItem);
-        listItem.addEventListener('click', function() {
-            openPopup(file);
+            docList.appendChild(listItem);
+            listItem.addEventListener('click', function() {
+                openPopup(file);
+            });
         });
     }
 }
@@ -100,3 +101,38 @@ function sendMessage(event) {
 }
 
 document.getElementById('chat-form').addEventListener('submit', sendMessage);
+
+window.onload = fetchStoredFiles;
+
+function fetchStoredFiles() {
+    fetch('/files') 
+        .then(response => {
+            return response.json();
+        }).then(files => {
+            const docList = document.querySelector('.doc-list');
+            files.forEach(file => {
+                const listItem = document.createElement('li');
+                listItem.classList.add('doc-item');
+    
+                // Create the image preview by fetching the thumbnail
+                fetch(`/files/${file}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Error retrieving response');
+                        }
+                        return response.blob();
+                    })
+                    .then(blob => {
+                        const url = URL.createObjectURL(blob);
+                        const imagePreview = document.createElement('iframe');
+                        imagePreview.src = url;  // Set the Object URL as the image source
+                        imagePreview.alt = file;  // Use the file name for the alt text
+                        imagePreview.style.maxWidth = '100px'; // Set preview image size
+                        listItem.appendChild(imagePreview);
+    
+                        // Append the list item to the doc list
+                        docList.appendChild(listItem);
+                    });
+            });
+        });
+}
