@@ -3,28 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ctrl-F </title>
+    <title>Ctrl-F</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
+    
     <!-- Sidebar for documents and document upload -->
     <div class="container">
+        <!-- Sidebar for documents -->
         <aside class="sidebar">
-            <h2> Documents</h2>
-                <button id="uploadButton" onclick="triggerUpload()">Upload Document</button>
+            
+            <div class="upload-container">
+                <button id="uploadButton" class="plus-sign" onclick="triggerUpload()">+</button>
                 <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload()">
-                <div class="popup" id="userPopup">
-                    <div class="popup-content">
-                        <h2>User Information</h2>
-                        <p>User details go here...</p>
-                        <button onclick="closeUserPopup()">Close</button>
-                    </div>
-                </div>
-            </header>
+            </div>
+        
             <ul class="doc-list">
-                <li class="doc-item">Document 1</li>
-                <li class="doc-item">Document 2</li>
-                <li class="doc-item">Document 3</li>
+                <!-- This is where the documents or previews will be shown -->
             </ul>
         </aside>
 
@@ -32,15 +30,26 @@
         <main class="main-content">
             <header>
                 <h1>Ctrl-F</h1>
-                <div class="popup" id="userPopup">
-                    <div class="popup-content">
-                        <h2>User Information</h2>
-                        <p>User details go here...</p>
-                        <button onclick="closeUserPopup()">Close</button>
+
+                <!-- User Profile Icon -->
+                <div class="profile-pic-container">
+                    <img src="path-to-your-image.jpg" alt="User Profile" class="profile-pic" onclick="openUserPopup()">
+                    <div class="profile-popup" id="profilePopup">
+                        <h3>User Name</h3>
+                        <p>Email: user@example.com</p>
+                        <p>Settings, Logout, etc.</p>
                     </div>
                 </div>
             </header>
             <div class="chat-box">
+                <!-- Chat message display area -->
+                <div id="messages" class="messages"></div>
+                
+                <!-- Chat input form -->
+                <form id="chat-form" class="chat-form" onsubmit="sendMessage(event)">
+                    <input type="text" id="chat-input" placeholder="Type a message..." required>
+                    <button type="submit">Send</button>
+                </form>
             </div>
         </main>
     </div>
@@ -51,15 +60,6 @@
             <h2>Document Preview</h2>
             <p>Here is a preview of the document...</p>
             <button onclick="closePopup()">Close</button>
-        </div>
-    </div>
-
-    <!-- Popup for User Profile or User Info -->
-    <div class="popup" id="userPopup">
-        <div class="popup-content">
-            <h2>User Information</h2>
-            <p>User details go here...</p>
-            <button onclick="closeUserPopup()">Close</button>
         </div>
     </div>
 
