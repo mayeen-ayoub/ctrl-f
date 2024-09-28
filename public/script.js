@@ -63,14 +63,26 @@ function sendMessage(event) {
 
     messageContainer.scrollTop = messageContainer.scrollHeight;
 
-    setTimeout(() => {
-        const botMessage = document.createElement('div');
-        botMessage.classList.add('message', 'bot');
-        botMessage.innerText = "This is a bot reply.";
-        messageContainer.appendChild(botMessage);
-
-        messageContainer.scrollTop = messageContainer.scrollHeight;
-    }, 1000);
+    fetch('/query', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ text: messageText })
+    })
+    .then(response => response.json())
+    .then(data => {
+        setTimeout(() => {
+            const botMessage = document.createElement('div');
+            botMessage.classList.add('message', 'bot');
+            botMessage.innerText = data.message;
+            messageContainer.appendChild(botMessage);
+    
+            messageContainer.scrollTop = messageContainer.scrollHeight;
+        }, 1000);
+    }).catch((error) => {
+        console.error('Error:', error);
+    });
 }
 
 document.getElementById('chat-form').addEventListener('submit', sendMessage);

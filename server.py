@@ -3,7 +3,6 @@ from pypdf import PdfReader
 from io import BytesIO
 import re
 import os
-from pdf2image import convert_from_path
 from dotenv import load_dotenv
 import faiss
 from langchain_community.docstore.in_memory import InMemoryDocstore
@@ -92,15 +91,14 @@ def serve_file(filename):
     # Send the requested PDF file
     return send_from_directory(UPLOAD_FOLDER, filename)
 
-# @app.route('/thumbnail/<filename>', methods=['GET'])
-# def get_thumbnail(filename):
-# 	images = convert_from_path(os.path.join(UPLOAD_FOLDER, filename), first_page=1, last_page=1)
+@app.route('/query', methods=['POST'])
+def get_response():
+	user_message = request.json.get('text')
+	print(user_message)
+
+	return_message = "This is the return message"
 	
-# 	img_byte_arr = BytesIO()
-# 	images[0].save(img_byte_arr, format='PNG')
-# 	img_byte_arr.seek(0)
-	
-# 	return send_file(img_byte_arr, mimetype='image/png')
+	return jsonify({"status": "success", "message": return_message})
 	
 
 def clean_text(text):

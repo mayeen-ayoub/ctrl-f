@@ -4,4 +4,4 @@ langchain
 langchain_community
 langchain_openai
 faiss-cpu
-pdf2image
+pypdf
