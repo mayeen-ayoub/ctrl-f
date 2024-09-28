@@ -109,11 +109,11 @@ function renderFile(blob, file) {
     const listItem = document.createElement('li');
     listItem.classList.add('doc-item');
 
-    const imagePreview = document.createElement('embed');
-    imagePreview.src = url;
-    imagePreview.alt = file.name;
-    imagePreview.style.maxWidth = '100px'; 
-    listItem.appendChild(imagePreview);
+    const pdfPreview = document.createElement('embed');
+    pdfPreview.src = url;
+    pdfPreview.type = 'application/pdf';
+    pdfPreview.classList.add('curved-embed');
+    listItem.appendChild(pdfPreview);
 
     docList.appendChild(listItem);
     listItem.addEventListener('click', function() {

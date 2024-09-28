@@ -241,3 +241,11 @@
 .blur {
     filter: blur(5px);
 }
+
+.curved-embed {
+    width: 90%;
+    height: 200px;
+    border: none;
+    border-radius: 5px;
+    overflow: hidden;
+}
