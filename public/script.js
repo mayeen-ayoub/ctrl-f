@@ -29,14 +29,23 @@ function triggerUpload() {
 
 // Handle the file upload
 function handleFileUpload() {
-    const fileInput = document.getElementById('fileInput');
-    const file = fileInput.files[0];
+    const formData = new FormData();
+    const file = document.getElementById('fileInput').files[0];
+    formData.append('file', file);
     
     if (file) {
+        fetch("/extract-text", {
+            method: "post",
+            body: formData,
+        }).then(response => {
+            return "";
+        });
+
         console.log("File selected:", file.name);
         // Here you can add logic to send the file to the server
-        alert(`Uploading ${file.name}...`);
+        // alert(`Uploading ${file.name}...`);
     }
+    // }
 }
 
 // Simulate opening popup when clicking a document item
