@@ -15,6 +15,7 @@ from langchain_community.vectorstores import FAISS
 from langchain_openai.embeddings import OpenAIEmbeddings
 from langchain_openai.chat_models import ChatOpenAI
 from langchain.agents.agent_toolkits import create_conversational_retrieval_agent
+from langchain.prompts import PromptTemplate
 
 # Load environment variables
 load_dotenv()
@@ -32,20 +33,43 @@ vector_store = FAISS(
     index_to_docstore_id={}
 )
 retriever = vector_store.as_retriever()
+document_prompt = PromptTemplate(
+    input_variables=["document"],
+    template="""
+Document:
+{document}
+
+"""
+)
 retriever_tool = create_retriever_tool(
   retriever= retriever,
   name="ctrlf_document_retriever",
-  description="Searches and returns documents uploaded by the user."
+  description="Searches and returns documents uploaded by the user.",
+	document_prompt=document_prompt
 )
 added_documents = set()
 
 # Initialize the OpenAI chat agent
+custom_prompt = PromptTemplate(
+    input_variables=["query", "retrieved_docs"],
+    template="""
+You are a helpful assistant. Based on the following retrieved documents, answer the query.
+If there are no documents retrieved, respond with: "Please upload some files to train your model"
+
+Documents:
+{retrieved_docs}
+
+Query: {query}
+
+Answer:
+""")
 chat_model = ChatOpenAI()
 agent = create_conversational_retrieval_agent(
     tools=[retriever_tool],
     llm=chat_model,
     agent_type=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
-    verbose=True
+    verbose=True,
+		prompt=custom_prompt
 )
 
 # Route to serve the index.html file
@@ -124,7 +148,8 @@ def add_document(new_document_text):
   retriever_tool = create_retriever_tool(
     retriever= retriever,
     name="ctrlf_document_retriever",
-    description="Searches and returns documents uploaded by the user."
+    description="Searches and returns documents uploaded by the user.",
+		document_prompt=document_prompt
   )
 
 if __name__ == "__main__":
