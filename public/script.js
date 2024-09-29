@@ -72,14 +72,14 @@ function sendMessage(event) {
     })
     .then(response => response.json())
     .then(data => {
-        setTimeout(() => {
+        // setTimeout(() => {
             const botMessage = document.createElement('div');
             botMessage.classList.add('message', 'bot');
             botMessage.innerText = data.message;
             messageContainer.appendChild(botMessage);
     
             messageContainer.scrollTop = messageContainer.scrollHeight;
-        }, 1000);
+        // }, 1000);
     }).catch((error) => {
         console.error('Error:', error);
     });

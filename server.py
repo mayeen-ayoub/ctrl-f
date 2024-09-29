@@ -33,19 +33,11 @@ vector_store = FAISS(
     index_to_docstore_id={}
 )
 retriever = vector_store.as_retriever()
-document_prompt = PromptTemplate(
-    input_variables=["document"],
-    template="""
-Document:
-{document}
 
-"""
-)
 retriever_tool = create_retriever_tool(
   retriever= retriever,
   name="ctrlf_document_retriever",
   description="Searches and returns documents uploaded by the user.",
-	document_prompt=document_prompt
 )
 added_documents = set()
 
@@ -53,8 +45,8 @@ added_documents = set()
 custom_prompt = PromptTemplate(
     input_variables=["query", "retrieved_docs"],
     template="""
-You are a helpful assistant. Based on the following retrieved documents, answer the query.
-If there are no documents retrieved, respond with: "Please upload some files to train your model"
+You are a helpful assistant. Based on the following retrieved documents, answer the query using the latest document uploaded.
+If there are no documents retrieved, respond with: "Please upload some files to train your model".
 
 Documents:
 {retrieved_docs}
@@ -149,8 +141,7 @@ def add_document(new_document_text):
     retriever= retriever,
     name="ctrlf_document_retriever",
     description="Searches and returns documents uploaded by the user.",
-		document_prompt=document_prompt
   )
 
 if __name__ == "__main__":
-	app.run(debug=True)
+	app.run(debug=True, port=3000)
